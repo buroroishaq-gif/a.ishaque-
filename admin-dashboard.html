@@ -37,16 +37,19 @@
 </div>
 </div>
 <div class="stat-cards">
-<div class="stat-card"><div class="stat-icon" style="background:rgba(30,64,175,0.1);color:var(--primary)">👨‍🎓</div><div class="stat-value">850</div><div class="stat-label">Total Students</div></div>
+<div class="stat-card"><div class="stat-icon" style="background:rgba(30,64,175,0.1);color:var(--primary)">👨‍🎓</div><div class="stat-value" id="totalStudents">850</div><div class="stat-label">Total Students</div></div>
 <div class="stat-card"><div class="stat-icon" style="background:rgba(5,150,105,0.1);color:var(--secondary)">👨‍🏫</div><div class="stat-value">45</div><div class="stat-label">Total Teachers</div></div>
 <div class="stat-card"><div class="stat-icon" style="background:rgba(14,165,233,0.1);color:#0284c7">📚</div><div class="stat-value">15</div><div class="stat-label">Classes</div></div>
 <div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#d97706">📥</div><div class="stat-value" id="appCount">0</div><div class="stat-label">Pending Applications</div></div>
 </div>
 <div class="grid-2" style="gap:1.5rem;margin-bottom:2rem">
-<div class="card"><div class="card-body">
-<h3 style="margin-bottom:1rem">Recent Students</h3>
+<div class="card" id="students"><div class="card-body">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+<h3 style="margin:0">Students</h3>
+<button class="btn btn-primary btn-sm" onclick="openAddStudentModal()">+ Add Student</button>
+</div>
 <div class="table-wrapper"><table>
-<thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Fee Status</th></tr></thead>
+<thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Father</th><th>Phone</th><th>Fee Status</th></tr></thead>
 <tbody id="studentsTable"></tbody>
 </table></div>
 </div></div>
@@ -72,7 +75,7 @@
 <div class="card" style="margin-top:1.5rem" id="notices"><div class="card-body">
 <h3 style="margin-bottom:1rem">Quick Actions</h3>
 <div style="display:flex;flex-wrap:wrap;gap:0.75rem">
-<button class="btn btn-primary btn-sm" onclick="alert('Feature: Add Student form would open here')">+ Add Student</button>
+<button class="btn btn-primary btn-sm" onclick="openAddStudentModal()">+ Add Student</button>
 <button class="btn btn-secondary btn-sm" onclick="alert('Feature: Add Teacher form would open here')">+ Add Teacher</button>
 <button class="btn btn-outline btn-sm" onclick="alert('Feature: Publish Notice form would open here')">+ Publish Notice</button>
 <button class="btn btn-outline btn-sm" onclick="alert('Feature: Create Event form would open here')">+ Create Event</button>
@@ -81,15 +84,198 @@
 </div></div>
 </main>
 </div>
+
+<!-- Add Student Modal -->
+<div class="modal-overlay" id="addStudentModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add New Student</h3>
+      <button type="button" class="modal-close" onclick="closeAddStudentModal()" aria-label="Close">&times;</button>
+    </div>
+    <form id="addStudentForm">
+      <div class="modal-body">
+        <div id="studentFormSuccess" class="alert alert-success" style="display:none"></div>
+        <div class="grid-2" style="gap:1rem">
+          <div class="form-group">
+            <label>Student Name *</label>
+            <input type="text" class="form-control" id="s_name" required placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label>Father's Name *</label>
+            <input type="text" class="form-control" id="s_father" required placeholder="Father's name">
+          </div>
+        </div>
+        <div class="grid-2" style="gap:1rem">
+          <div class="form-group">
+            <label>Date of Birth *</label>
+            <input type="date" class="form-control" id="s_dob" required>
+          </div>
+          <div class="form-group">
+            <label>Gender *</label>
+            <select class="form-control" id="s_gender" required>
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2" style="gap:1rem">
+          <div class="form-group">
+            <label>Class *</label>
+            <select class="form-control" id="s_class" required>
+              <option value="">Select Class</option>
+              <option>Playgroup</option>
+              <option>Nursery</option>
+              <option>Class 1</option>
+              <option>Class 2</option>
+              <option>Class 3</option>
+              <option>Class 4</option>
+              <option>Class 5</option>
+              <option>Class 6</option>
+              <option>Class 7</option>
+              <option>Class 8</option>
+              <option>Class 9</option>
+              <option>Class 10</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Section</label>
+            <select class="form-control" id="s_section">
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="tel" class="form-control" id="s_phone" required placeholder="03XX-XXXXXXX">
+        </div>
+        <div class="form-group">
+          <label>Address</label>
+          <textarea class="form-control" id="s_address" placeholder="Home address"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Fee Status</label>
+          <select class="form-control" id="s_feeStatus">
+            <option>Paid</option>
+            <option>Pending</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeAddStudentModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm">Save Student</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script src="main.js"></script>
 <script>
 const session = SchoolApp.requireAuth(['admin']);
+
+function getAllStudents() {
+  const saved = JSON.parse(localStorage.getItem('students') || '[]');
+  const sample = SchoolApp.SAMPLE_DATA.students || [];
+  // Merge: sample first, then extra saved ones (by id)
+  const ids = new Set(sample.map(s => s.id));
+  const extra = saved.filter(s => !ids.has(s.id));
+  return [...sample, ...extra];
+}
+
+function saveExtraStudents(list) {
+  // Only store students that are not in SAMPLE_DATA
+  const sampleIds = new Set((SchoolApp.SAMPLE_DATA.students || []).map(s => s.id));
+  const extra = list.filter(s => !sampleIds.has(s.id));
+  localStorage.setItem('students', JSON.stringify(extra));
+}
+
+function generateStudentId() {
+  const year = new Date().getFullYear();
+  const existing = getAllStudents();
+  const num = existing.length + 1;
+  return 'APS-' + year + '-' + String(num).padStart(3, '0');
+}
+
+function renderStudentsTable() {
+  const students = getAllStudents();
+  document.getElementById('totalStudents').textContent = students.length;
+  const tbody = document.getElementById('studentsTable');
+  if (!students.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">No students found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = students.map(s =>
+    `<tr>
+      <td>${s.id}</td>
+      <td>${s.name}</td>
+      <td>${s.class}${s.section ? ' - ' + s.section : ''}</td>
+      <td>${s.father || '-'}</td>
+      <td>${s.phone || '-'}</td>
+      <td><span class="badge ${s.feeStatus === 'Paid' ? 'badge-success' : 'badge-warning'}">${s.feeStatus || 'Pending'}</span></td>
+    </tr>`
+  ).join('');
+}
+
+function openAddStudentModal() {
+  document.getElementById('addStudentForm').reset();
+  document.getElementById('studentFormSuccess').style.display = 'none';
+  document.getElementById('addStudentModal').classList.add('active');
+}
+
+function closeAddStudentModal() {
+  document.getElementById('addStudentModal').classList.remove('active');
+}
+
+// Close modal on overlay click
+document.getElementById('addStudentModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAddStudentModal();
+});
+
+document.getElementById('addStudentForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (!SchoolApp.validateForm('addStudentForm')) {
+    alert('Please fill all required fields');
+    return;
+  }
+
+  const newStudent = {
+    id: generateStudentId(),
+    name: document.getElementById('s_name').value.trim(),
+    father: document.getElementById('s_father').value.trim(),
+    dob: document.getElementById('s_dob').value,
+    gender: document.getElementById('s_gender').value,
+    class: document.getElementById('s_class').value,
+    section: document.getElementById('s_section').value || 'A',
+    phone: document.getElementById('s_phone').value.trim(),
+    address: document.getElementById('s_address').value.trim(),
+    attendance: 100,
+    feeStatus: document.getElementById('s_feeStatus').value || 'Pending'
+  };
+
+  const all = getAllStudents();
+  all.push(newStudent);
+  saveExtraStudents(all);
+
+  renderStudentsTable();
+
+  const success = document.getElementById('studentFormSuccess');
+  success.style.display = 'block';
+  success.innerHTML = '<strong>Student Added Successfully!</strong><br>ID: <strong>' + newStudent.id + '</strong> — ' + newStudent.name;
+
+  // Reset form after short delay so user sees success
+  setTimeout(() => {
+    document.getElementById('addStudentForm').reset();
+    success.style.display = 'none';
+    closeAddStudentModal();
+  }, 1500);
+});
+
 if (session) {
   document.getElementById('welcome').textContent = 'Welcome, ' + session.name;
-  const data = SchoolApp.SAMPLE_DATA;
-  document.getElementById('studentsTable').innerHTML = data.students.slice(0,5).map(s =>
-    `<tr><td>${s.id}</td><td>${s.name}</td><td>${s.class}</td><td><span class="badge ${s.feeStatus==='Paid'?'badge-success':'badge-warning'}">${s.feeStatus}</span></td></tr>`
-  ).join('');
+  renderStudentsTable();
+
   const apps = JSON.parse(localStorage.getItem('applications') || '[]');
   document.getElementById('appCount').textContent = apps.filter(a => a.status === 'Pending').length;
   if (apps.length) {
