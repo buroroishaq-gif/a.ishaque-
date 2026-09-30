@@ -12,50 +12,117 @@
 <aside class="sidebar" id="sidebar">
 <div class="sidebar-logo"><div class="logo"><img src="logo.png" alt="Al Ishaque Public School" class="logo-img" width="56" height="56"><span style="font-size:0.95rem">Admin Panel</span></div></div>
 <nav class="sidebar-nav">
-<a href="admin-dashboard.html" class="active">📊 Dashboard</a>
-<a href="#students">👨‍🎓 Students</a>
-<a href="#teachers">👨‍🏫 Teachers</a>
-<a href="#attendance">📋 Attendance</a>
-<a href="#fees">💰 Fees</a>
-<a href="#results">📝 Results</a>
-<a href="#notices">📢 Notices</a>
-<a href="#events">📅 Events</a>
-<a href="#admissions">📥 Applications</a>
-<a href="#gallery">🖼️ Gallery</a>
+<a href="#top" class="active" onclick="showSection('dashboard')">📊 Dashboard</a>
+<a href="#students" onclick="showSection('students')">👨‍🎓 Students</a>
+<a href="#teachers" onclick="showSection('teachers')">👨‍🏫 Teachers</a>
+<a href="#notices" onclick="showSection('notices')">📢 Notices</a>
+<a href="#events" onclick="showSection('events')">📅 Events</a>
+<a href="#admissions" onclick="showSection('admissions')">📥 Applications</a>
+<a href="#attendance" onclick="showSection('attendance')">📋 Attendance</a>
+<a href="#fees" onclick="showSection('fees')">💰 Fees</a>
+<a href="#results" onclick="showSection('results')">📝 Results</a>
+<a href="#gallery" onclick="showSection('gallery')">🖼️ Gallery</a>
 <a href="#" onclick="SchoolApp.logout()">🚪 Logout</a>
 </nav>
 </aside>
 <main class="main-content">
-<div class="dashboard-header">
+<div class="dashboard-header" id="top">
 <div>
 <h1 style="font-size:1.5rem">Dashboard Overview</h1>
 <p style="color:var(--text-muted);font-size:0.9rem" id="welcome">Welcome, Administrator</p>
 </div>
-<div style="display:flex;gap:0.5rem">
+<div style="display:flex;gap:0.5rem;flex-wrap:wrap">
 <button class="icon-btn theme-toggle">🌙</button>
 <button class="btn btn-sm btn-outline" onclick="document.getElementById('sidebar').classList.toggle('open')">☰ Menu</button>
 </div>
 </div>
+
 <div class="stat-cards">
-<div class="stat-card"><div class="stat-icon" style="background:rgba(30,64,175,0.1);color:var(--primary)">👨‍🎓</div><div class="stat-value" id="totalStudents">850</div><div class="stat-label">Total Students</div></div>
-<div class="stat-card"><div class="stat-icon" style="background:rgba(5,150,105,0.1);color:var(--secondary)">👨‍🏫</div><div class="stat-value">45</div><div class="stat-label">Total Teachers</div></div>
-<div class="stat-card"><div class="stat-icon" style="background:rgba(14,165,233,0.1);color:#0284c7">📚</div><div class="stat-value">15</div><div class="stat-label">Classes</div></div>
-<div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#d97706">📥</div><div class="stat-value" id="appCount">0</div><div class="stat-label">Pending Applications</div></div>
+<div class="stat-card"><div class="stat-icon" style="background:rgba(30,64,175,0.1);color:var(--primary)">👨‍🎓</div><div class="stat-value" id="totalStudents">0</div><div class="stat-label">Total Students</div></div>
+<div class="stat-card"><div class="stat-icon" style="background:rgba(5,150,105,0.1);color:var(--secondary)">👨‍🏫</div><div class="stat-value" id="totalTeachers">0</div><div class="stat-label">Total Teachers</div></div>
+<div class="stat-card"><div class="stat-icon" style="background:rgba(14,165,233,0.1);color:#0284c7">📢</div><div class="stat-value" id="totalNotices">0</div><div class="stat-label">Notices</div></div>
+<div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#d97706">📥</div><div class="stat-value" id="appCount">0</div><div class="stat-label">Pending Apps</div></div>
 </div>
-<div class="grid-2" style="gap:1.5rem;margin-bottom:2rem">
-<div class="card" id="students"><div class="card-body">
+
+<div class="card" style="margin-bottom:1.5rem">
+<div class="card-body">
+<h3 style="margin-bottom:1rem">Quick Actions</h3>
+<div style="display:flex;flex-wrap:wrap;gap:0.75rem">
+<button class="btn btn-primary btn-sm" onclick="openModal('student')">+ Add Student</button>
+<button class="btn btn-secondary btn-sm" onclick="openModal('teacher')">+ Add Teacher</button>
+<button class="btn btn-outline btn-sm" onclick="openModal('notice')">+ Publish Notice</button>
+<button class="btn btn-outline btn-sm" onclick="openModal('event')">+ Create Event</button>
+<button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ Print Report</button>
+</div>
+</div>
+</div>
+
+<div class="card" id="students" style="margin-bottom:1.5rem">
+<div class="card-body">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
 <h3 style="margin:0">Students</h3>
-<button class="btn btn-primary btn-sm" onclick="openAddStudentModal()">+ Add Student</button>
+<button class="btn btn-primary btn-sm" onclick="openModal('student')">+ Add Student</button>
 </div>
 <div class="table-wrapper"><table>
 <thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Father</th><th>Phone</th><th>Fee Status</th></tr></thead>
 <tbody id="studentsTable"></tbody>
 </table></div>
-</div></div>
-<div class="card"><div class="card-body">
+</div>
+</div>
+
+<div class="card" id="teachers" style="margin-bottom:1.5rem">
+<div class="card-body">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+<h3 style="margin:0">Teachers</h3>
+<button class="btn btn-secondary btn-sm" onclick="openModal('teacher')">+ Add Teacher</button>
+</div>
+<div class="table-wrapper"><table>
+<thead><tr><th>ID</th><th>Name</th><th>Subject</th><th>Classes</th><th>Phone</th><th>Email</th></tr></thead>
+<tbody id="teachersTable"></tbody>
+</table></div>
+</div>
+</div>
+
+<div class="card" id="notices" style="margin-bottom:1.5rem">
+<div class="card-body">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+<h3 style="margin:0">Notices</h3>
+<button class="btn btn-outline btn-sm" onclick="openModal('notice')">+ Publish Notice</button>
+</div>
+<div class="table-wrapper"><table>
+<thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Content</th></tr></thead>
+<tbody id="noticesTable"></tbody>
+</table></div>
+</div>
+</div>
+
+<div class="card" id="events" style="margin-bottom:1.5rem">
+<div class="card-body">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+<h3 style="margin:0">Events</h3>
+<button class="btn btn-outline btn-sm" onclick="openModal('event')">+ Create Event</button>
+</div>
+<div class="table-wrapper"><table>
+<thead><tr><th>Title</th><th>Date</th><th>Time</th><th>Location</th><th>Type</th></tr></thead>
+<tbody id="eventsTable"></tbody>
+</table></div>
+</div>
+</div>
+
+<div class="card" id="admissions" style="margin-bottom:1.5rem">
+<div class="card-body">
+<h3 style="margin-bottom:1rem">Admission Applications</h3>
+<div class="table-wrapper"><table>
+<thead><tr><th>App No</th><th>Student</th><th>Class</th><th>Phone</th><th>Status</th><th>Date</th></tr></thead>
+<tbody id="appsTable"><tr><td colspan="6" style="text-align:center;color:var(--text-muted)">No applications yet. Submit from Admissions page.</td></tr></tbody>
+</table></div>
+</div>
+</div>
+
+<div class="card" id="attendance" style="margin-bottom:1.5rem">
+<div class="card-body">
 <h3 style="margin-bottom:1rem">Attendance Overview</h3>
-<div style="display:flex;flex-direction:column;gap:1rem">
+<div style="display:flex;flex-direction:column;gap:1rem;max-width:400px">
 <div style="display:flex;justify-content:space-between;align-items:center"><span>Present Today</span><span class="badge badge-success">92%</span></div>
 <div style="display:flex;justify-content:space-between;align-items:center"><span>Absent</span><span class="badge badge-danger">5%</span></div>
 <div style="display:flex;justify-content:space-between;align-items:center"><span>On Leave</span><span class="badge badge-warning">3%</span></div>
@@ -63,109 +130,171 @@
 <div style="width:92%;height:100%;background:var(--secondary)"></div>
 </div>
 </div>
-</div></div>
 </div>
-<div class="card" id="admissions"><div class="card-body">
-<h3 style="margin-bottom:1rem">Admission Applications</h3>
-<div class="table-wrapper"><table>
-<thead><tr><th>App No</th><th>Student</th><th>Class</th><th>Phone</th><th>Status</th><th>Date</th></tr></thead>
-<tbody id="appsTable"><tr><td colspan="6" style="text-align:center;color:var(--text-muted)">No applications yet. Submit from Admissions page.</td></tr></tbody>
-</table></div>
-</div></div>
-<div class="card" style="margin-top:1.5rem" id="notices"><div class="card-body">
-<h3 style="margin-bottom:1rem">Quick Actions</h3>
-<div style="display:flex;flex-wrap:wrap;gap:0.75rem">
-<button class="btn btn-primary btn-sm" onclick="openAddStudentModal()">+ Add Student</button>
-<button class="btn btn-secondary btn-sm" onclick="alert('Feature: Add Teacher form would open here')">+ Add Teacher</button>
-<button class="btn btn-outline btn-sm" onclick="alert('Feature: Publish Notice form would open here')">+ Publish Notice</button>
-<button class="btn btn-outline btn-sm" onclick="alert('Feature: Create Event form would open here')">+ Create Event</button>
-<button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ Print Report</button>
 </div>
-</div></div>
+
+<div class="card" id="fees" style="margin-bottom:1.5rem">
+<div class="card-body">
+<h3 style="margin-bottom:1rem">Fees</h3>
+<p style="color:var(--text-muted)">Fee records are managed per student. View individual fee status in Students table or Student Portal.</p>
+</div>
+</div>
+<div class="card" id="results" style="margin-bottom:1.5rem">
+<div class="card-body">
+<h3 style="margin-bottom:1rem">Results</h3>
+<p style="color:var(--text-muted)">Results can be entered from Teacher Portal. Sample Mid-Term results are available in Student Dashboard.</p>
+</div>
+</div>
+<div class="card" id="gallery" style="margin-bottom:1.5rem">
+<div class="card-body">
+<h3 style="margin-bottom:1rem">Gallery</h3>
+<p style="color:var(--text-muted)">Photo gallery is available on the public Gallery page. Upload feature ready for backend integration.</p>
+</div>
+</div>
 </main>
 </div>
 
 <!-- Add Student Modal -->
-<div class="modal-overlay" id="addStudentModal">
+<div class="modal-overlay" id="modal-student">
   <div class="modal">
     <div class="modal-header">
       <h3>Add New Student</h3>
-      <button type="button" class="modal-close" onclick="closeAddStudentModal()" aria-label="Close">&times;</button>
+      <button type="button" class="modal-close" onclick="closeModal('student')">&times;</button>
     </div>
-    <form id="addStudentForm">
+    <form id="form-student">
       <div class="modal-body">
-        <div id="studentFormSuccess" class="alert alert-success" style="display:none"></div>
         <div class="grid-2" style="gap:1rem">
-          <div class="form-group">
-            <label>Student Name *</label>
-            <input type="text" class="form-control" id="s_name" required placeholder="Full name">
-          </div>
-          <div class="form-group">
-            <label>Father's Name *</label>
-            <input type="text" class="form-control" id="s_father" required placeholder="Father's name">
-          </div>
+          <div class="form-group"><label>Student Name *</label><input type="text" class="form-control" id="s_name" required placeholder="Full name"></div>
+          <div class="form-group"><label>Father's Name *</label><input type="text" class="form-control" id="s_father" required placeholder="Father's name"></div>
         </div>
         <div class="grid-2" style="gap:1rem">
-          <div class="form-group">
-            <label>Date of Birth *</label>
-            <input type="date" class="form-control" id="s_dob" required>
-          </div>
-          <div class="form-group">
-            <label>Gender *</label>
+          <div class="form-group"><label>Date of Birth *</label><input type="date" class="form-control" id="s_dob" required></div>
+          <div class="form-group"><label>Gender *</label>
             <select class="form-control" id="s_gender" required>
-              <option value="">Select</option>
-              <option>Male</option>
-              <option>Female</option>
+              <option value="">Select</option><option>Male</option><option>Female</option>
             </select>
           </div>
         </div>
         <div class="grid-2" style="gap:1rem">
-          <div class="form-group">
-            <label>Class *</label>
+          <div class="form-group"><label>Class *</label>
             <select class="form-control" id="s_class" required>
               <option value="">Select Class</option>
-              <option>Playgroup</option>
-              <option>Nursery</option>
-              <option>Class 1</option>
-              <option>Class 2</option>
-              <option>Class 3</option>
-              <option>Class 4</option>
-              <option>Class 5</option>
-              <option>Class 6</option>
-              <option>Class 7</option>
-              <option>Class 8</option>
-              <option>Class 9</option>
-              <option>Class 10</option>
+              <option>Playgroup</option><option>Nursery</option>
+              <option>Class 1</option><option>Class 2</option><option>Class 3</option>
+              <option>Class 4</option><option>Class 5</option><option>Class 6</option>
+              <option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>Section</label>
-            <select class="form-control" id="s_section">
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
-            </select>
+          <div class="form-group"><label>Section</label>
+            <select class="form-control" id="s_section"><option>A</option><option>B</option><option>C</option></select>
           </div>
         </div>
-        <div class="form-group">
-          <label>Phone *</label>
-          <input type="tel" class="form-control" id="s_phone" required placeholder="03XX-XXXXXXX">
-        </div>
-        <div class="form-group">
-          <label>Address</label>
-          <textarea class="form-control" id="s_address" placeholder="Home address"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Fee Status</label>
-          <select class="form-control" id="s_feeStatus">
-            <option>Paid</option>
-            <option>Pending</option>
-          </select>
+        <div class="form-group"><label>Phone *</label><input type="tel" class="form-control" id="s_phone" required placeholder="03XX-XXXXXXX"></div>
+        <div class="form-group"><label>Address</label><textarea class="form-control" id="s_address" placeholder="Home address"></textarea></div>
+        <div class="form-group"><label>Fee Status</label>
+          <select class="form-control" id="s_feeStatus"><option>Paid</option><option>Pending</option></select>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline btn-sm" onclick="closeAddStudentModal()">Cancel</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('student')">Cancel</button>
         <button type="submit" class="btn btn-primary btn-sm">Save Student</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add Teacher Modal -->
+<div class="modal-overlay" id="modal-teacher">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add New Teacher</h3>
+      <button type="button" class="modal-close" onclick="closeModal('teacher')">&times;</button>
+    </div>
+    <form id="form-teacher">
+      <div class="modal-body">
+        <div class="form-group"><label>Full Name *</label><input type="text" class="form-control" id="t_name" required placeholder="Mr. / Ms. Name"></div>
+        <div class="grid-2" style="gap:1rem">
+          <div class="form-group"><label>Subject *</label>
+            <select class="form-control" id="t_subject" required>
+              <option value="">Select</option>
+              <option>Mathematics</option><option>English</option><option>Science</option>
+              <option>Urdu</option><option>Islamiat</option><option>Social Studies</option>
+              <option>Computer</option><option>Pakistan Studies</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Classes *</label><input type="text" class="form-control" id="t_classes" required placeholder="e.g. 8A, 9A"></div>
+        </div>
+        <div class="grid-2" style="gap:1rem">
+          <div class="form-group"><label>Phone *</label><input type="tel" class="form-control" id="t_phone" required placeholder="03XX-XXXXXXX"></div>
+          <div class="form-group"><label>Email</label><input type="email" class="form-control" id="t_email" placeholder="name@alishaque.edu.pk"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('teacher')">Cancel</button>
+        <button type="submit" class="btn btn-secondary btn-sm">Save Teacher</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Publish Notice Modal -->
+<div class="modal-overlay" id="modal-notice">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Publish Notice</h3>
+      <button type="button" class="modal-close" onclick="closeModal('notice')">&times;</button>
+    </div>
+    <form id="form-notice">
+      <div class="modal-body">
+        <div class="form-group"><label>Title *</label><input type="text" class="form-control" id="n_title" required placeholder="Notice title"></div>
+        <div class="grid-2" style="gap:1rem">
+          <div class="form-group"><label>Category *</label>
+            <select class="form-control" id="n_category" required>
+              <option value="">Select</option>
+              <option>Admission</option><option>Exam</option><option>Holiday</option>
+              <option>Event</option><option>General</option><option>Urgent</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Date *</label><input type="date" class="form-control" id="n_date" required></div>
+        </div>
+        <div class="form-group"><label>Content *</label><textarea class="form-control" id="n_content" required placeholder="Full notice text..."></textarea></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('notice')">Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm">Publish Notice</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Create Event Modal -->
+<div class="modal-overlay" id="modal-event">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Create Event</h3>
+      <button type="button" class="modal-close" onclick="closeModal('event')">&times;</button>
+    </div>
+    <form id="form-event">
+      <div class="modal-body">
+        <div class="form-group"><label>Event Title *</label><input type="text" class="form-control" id="e_title" required placeholder="Event name"></div>
+        <div class="grid-2" style="gap:1rem">
+          <div class="form-group"><label>Date *</label><input type="date" class="form-control" id="e_date" required></div>
+          <div class="form-group"><label>Time *</label><input type="text" class="form-control" id="e_time" required placeholder="e.g. 9:00 AM"></div>
+        </div>
+        <div class="grid-2" style="gap:1rem">
+          <div class="form-group"><label>Location *</label><input type="text" class="form-control" id="e_location" required placeholder="School Ground / Hall"></div>
+          <div class="form-group"><label>Type *</label>
+            <select class="form-control" id="e_type" required>
+              <option value="">Select</option>
+              <option>Sports</option><option>Function</option><option>Meeting</option>
+              <option>Trip</option><option>Academic</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('event')">Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm">Create Event</button>
       </div>
     </form>
   </div>
@@ -175,73 +304,100 @@
 <script>
 const session = SchoolApp.requireAuth(['admin']);
 
+function getExtra(key) { return JSON.parse(localStorage.getItem(key) || '[]'); }
+function setExtra(key, list) { localStorage.setItem(key, JSON.stringify(list)); }
+
 function getAllStudents() {
-  const saved = JSON.parse(localStorage.getItem('students') || '[]');
   const sample = SchoolApp.SAMPLE_DATA.students || [];
-  // Merge: sample first, then extra saved ones (by id)
+  const saved = getExtra('students');
   const ids = new Set(sample.map(s => s.id));
-  const extra = saved.filter(s => !ids.has(s.id));
-  return [...sample, ...extra];
+  return [...sample, ...saved.filter(s => !ids.has(s.id))];
+}
+function getAllTeachers() {
+  const sample = SchoolApp.SAMPLE_DATA.teachers || [];
+  const saved = getExtra('teachers');
+  const ids = new Set(sample.map(t => t.id));
+  return [...sample, ...saved.filter(t => !ids.has(t.id))];
+}
+function getAllNotices() {
+  const sample = SchoolApp.SAMPLE_DATA.notices || [];
+  const saved = getExtra('notices');
+  const ids = new Set(sample.map(n => n.id));
+  return [...sample, ...saved.filter(n => !ids.has(n.id))];
+}
+function getAllEvents() {
+  const sample = SchoolApp.SAMPLE_DATA.events || [];
+  const saved = getExtra('events');
+  const ids = new Set(sample.map(e => e.id));
+  return [...sample, ...saved.filter(e => !ids.has(e.id))];
 }
 
-function saveExtraStudents(list) {
-  // Only store students that are not in SAMPLE_DATA
-  const sampleIds = new Set((SchoolApp.SAMPLE_DATA.students || []).map(s => s.id));
-  const extra = list.filter(s => !sampleIds.has(s.id));
-  localStorage.setItem('students', JSON.stringify(extra));
-}
-
-function generateStudentId() {
+function genStudentId() {
   const year = new Date().getFullYear();
-  const existing = getAllStudents();
-  const num = existing.length + 1;
-  return 'APS-' + year + '-' + String(num).padStart(3, '0');
+  return 'APS-' + year + '-' + String(getAllStudents().length + 1).padStart(3, '0');
+}
+function genTeacherId() {
+  return 'T-' + String(getAllTeachers().length + 1).padStart(3, '0');
 }
 
-function renderStudentsTable() {
+function renderAll() {
   const students = getAllStudents();
   document.getElementById('totalStudents').textContent = students.length;
-  const tbody = document.getElementById('studentsTable');
-  if (!students.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">No students found</td></tr>';
-    return;
+  document.getElementById('studentsTable').innerHTML = students.map(s =>
+    '<tr><td>'+s.id+'</td><td>'+s.name+'</td><td>'+s.class+(s.section?' - '+s.section:'')+'</td><td>'+(s.father||'-')+'</td><td>'+(s.phone||'-')+'</td><td><span class="badge '+(s.feeStatus==='Paid'?'badge-success':'badge-warning')+'">'+(s.feeStatus||'Pending')+'</span></td></tr>'
+  ).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">No students</td></tr>';
+
+  const teachers = getAllTeachers();
+  document.getElementById('totalTeachers').textContent = teachers.length;
+  document.getElementById('teachersTable').innerHTML = teachers.map(t =>
+    '<tr><td>'+t.id+'</td><td>'+t.name+'</td><td>'+t.subject+'</td><td>'+t.classes+'</td><td>'+(t.phone||'-')+'</td><td>'+(t.email||'-')+'</td></tr>'
+  ).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">No teachers</td></tr>';
+
+  const notices = getAllNotices();
+  document.getElementById('totalNotices').textContent = notices.length;
+  document.getElementById('noticesTable').innerHTML = notices.map(n =>
+    '<tr><td>'+n.title+'</td><td><span class="badge badge-info">'+n.category+'</span></td><td>'+n.date+'</td><td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+n.content+'</td></tr>'
+  ).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--text-muted)">No notices</td></tr>';
+
+  const events = getAllEvents();
+  document.getElementById('eventsTable').innerHTML = events.map(e =>
+    '<tr><td>'+e.title+'</td><td>'+e.date+'</td><td>'+e.time+'</td><td>'+e.location+'</td><td><span class="badge badge-info">'+e.type+'</span></td></tr>'
+  ).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">No events</td></tr>';
+
+  const apps = getExtra('applications');
+  document.getElementById('appCount').textContent = apps.filter(a => a.status === 'Pending').length;
+  if (apps.length) {
+    document.getElementById('appsTable').innerHTML = apps.map(a =>
+      '<tr><td>'+a.appNo+'</td><td>'+a.studentName+'</td><td>'+a.classApply+'</td><td>'+a.phone+'</td><td><span class="badge badge-warning">'+a.status+'</span></td><td>'+new Date(a.date).toLocaleDateString()+'</td></tr>'
+    ).join('');
   }
-  tbody.innerHTML = students.map(s =>
-    `<tr>
-      <td>${s.id}</td>
-      <td>${s.name}</td>
-      <td>${s.class}${s.section ? ' - ' + s.section : ''}</td>
-      <td>${s.father || '-'}</td>
-      <td>${s.phone || '-'}</td>
-      <td><span class="badge ${s.feeStatus === 'Paid' ? 'badge-success' : 'badge-warning'}">${s.feeStatus || 'Pending'}</span></td>
-    </tr>`
-  ).join('');
 }
 
-function openAddStudentModal() {
-  document.getElementById('addStudentForm').reset();
-  document.getElementById('studentFormSuccess').style.display = 'none';
-  document.getElementById('addStudentModal').classList.add('active');
+function openModal(type) {
+  document.getElementById('form-' + type).reset();
+  document.getElementById('modal-' + type).classList.add('active');
+  if (type === 'notice') document.getElementById('n_date').value = new Date().toISOString().slice(0,10);
+}
+function closeModal(type) {
+  document.getElementById('modal-' + type).classList.remove('active');
 }
 
-function closeAddStudentModal() {
-  document.getElementById('addStudentModal').classList.remove('active');
-}
-
-// Close modal on overlay click
-document.getElementById('addStudentModal').addEventListener('click', function(e) {
-  if (e.target === this) closeAddStudentModal();
+['student','teacher','notice','event'].forEach(function(type) {
+  document.getElementById('modal-' + type).addEventListener('click', function(e) {
+    if (e.target === this) closeModal(type);
+  });
 });
 
-document.getElementById('addStudentForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  if (!SchoolApp.validateForm('addStudentForm')) {
-    alert('Please fill all required fields');
-    return;
-  }
+function showSection(id) {
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-  const newStudent = {
-    id: generateStudentId(),
+document.getElementById('form-student').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (!SchoolApp.validateForm('form-student')) { alert('Please fill all required fields'); return; }
+  var student = {
+    id: genStudentId(),
     name: document.getElementById('s_name').value.trim(),
     father: document.getElementById('s_father').value.trim(),
     dob: document.getElementById('s_dob').value,
@@ -253,36 +409,73 @@ document.getElementById('addStudentForm').addEventListener('submit', function(e)
     attendance: 100,
     feeStatus: document.getElementById('s_feeStatus').value || 'Pending'
   };
+  var saved = getExtra('students');
+  saved.push(student);
+  setExtra('students', saved);
+  renderAll();
+  closeModal('student');
+  alert('Student added successfully!\nID: ' + student.id + '\nName: ' + student.name);
+});
 
-  const all = getAllStudents();
-  all.push(newStudent);
-  saveExtraStudents(all);
+document.getElementById('form-teacher').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (!SchoolApp.validateForm('form-teacher')) { alert('Please fill all required fields'); return; }
+  var teacher = {
+    id: genTeacherId(),
+    name: document.getElementById('t_name').value.trim(),
+    subject: document.getElementById('t_subject').value,
+    classes: document.getElementById('t_classes').value.trim(),
+    phone: document.getElementById('t_phone').value.trim(),
+    email: document.getElementById('t_email').value.trim()
+  };
+  var saved = getExtra('teachers');
+  saved.push(teacher);
+  setExtra('teachers', saved);
+  renderAll();
+  closeModal('teacher');
+  alert('Teacher added successfully!\nID: ' + teacher.id + '\nName: ' + teacher.name);
+});
 
-  renderStudentsTable();
+document.getElementById('form-notice').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (!SchoolApp.validateForm('form-notice')) { alert('Please fill all required fields'); return; }
+  var notice = {
+    id: Date.now(),
+    title: document.getElementById('n_title').value.trim(),
+    category: document.getElementById('n_category').value,
+    date: document.getElementById('n_date').value,
+    content: document.getElementById('n_content').value.trim()
+  };
+  var saved = getExtra('notices');
+  saved.push(notice);
+  setExtra('notices', saved);
+  renderAll();
+  closeModal('notice');
+  alert('Notice published successfully!\n' + notice.title);
+});
 
-  const success = document.getElementById('studentFormSuccess');
-  success.style.display = 'block';
-  success.innerHTML = '<strong>Student Added Successfully!</strong><br>ID: <strong>' + newStudent.id + '</strong> — ' + newStudent.name;
-
-  // Reset form after short delay so user sees success
-  setTimeout(() => {
-    document.getElementById('addStudentForm').reset();
-    success.style.display = 'none';
-    closeAddStudentModal();
-  }, 1500);
+document.getElementById('form-event').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (!SchoolApp.validateForm('form-event')) { alert('Please fill all required fields'); return; }
+  var event = {
+    id: Date.now(),
+    title: document.getElementById('e_title').value.trim(),
+    date: document.getElementById('e_date').value,
+    time: document.getElementById('e_time').value.trim(),
+    location: document.getElementById('e_location').value.trim(),
+    type: document.getElementById('e_type').value
+  };
+  var saved = getExtra('events');
+  saved.push(event);
+  setExtra('events', saved);
+  renderAll();
+  closeModal('event');
+  alert('Event created successfully!\n' + event.title);
 });
 
 if (session) {
   document.getElementById('welcome').textContent = 'Welcome, ' + session.name;
-  renderStudentsTable();
-
-  const apps = JSON.parse(localStorage.getItem('applications') || '[]');
-  document.getElementById('appCount').textContent = apps.filter(a => a.status === 'Pending').length;
-  if (apps.length) {
-    document.getElementById('appsTable').innerHTML = apps.map(a =>
-      `<tr><td>${a.appNo}</td><td>${a.studentName}</td><td>${a.classApply}</td><td>${a.phone}</td><td><span class="badge badge-warning">${a.status}</span></td><td>${new Date(a.date).toLocaleDateString()}</td></tr>`
-    ).join('');
-  }
+  renderAll();
 }
 </script>
 </body>
